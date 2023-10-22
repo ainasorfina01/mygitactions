@@ -1,34 +1,17 @@
 name: Super-Linter
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-  issues:
-    types:
-      - opened
-  issue_comment:
-    types:
-      - created
+on: push
 
 jobs:
-  lint:
-    name: Lint Code
+  super-lint:
+    name: Lint code base
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Super-Linter
-        uses: github/super-linter@v4
-
       - name: Run Super-Linter
+        uses: github/super-linter@v4
         env:
-          VALIDATE_ALL_CODEBASE: true
           DEFAULT_BRANCH: main
-        run: |
-          ./start.sh
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
